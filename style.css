@@ -125,10 +125,10 @@ table tbody tr:hover {
     color: var(--primary-color);
 }
 
-/* Ajustando larguras específicas */
+
 table th:nth-child(1),
 table td:nth-child(1) {
-    width: 15%; /* Coluna Data */
+    width: 10%; 
 }
 
 table th:nth-child(2),
