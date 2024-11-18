@@ -37,27 +37,37 @@ function registrarPontoPassado() {
     const dataPassada = document.getElementById('data-passada').value;
     const horaPassada = document.getElementById('hora-passada').value;
     const tipoPassado = document.getElementById('tipo-passado').value;
-    const justificativa = document.getElementById('justificativa').value;
-
-    if (!justificativa.trim()) {
-        alert('A justificativa é obrigatória para pontos atrasados.');
-        return;
-    }
 
     if (dataPassada && horaPassada && new Date(dataPassada) <= new Date()) {
         const ponto = {
             data: new Date(dataPassada).toLocaleDateString(),
             hora: horaPassada,
             tipo: tipoPassado,
-            justificativa: justificativa.trim(),
+            justificativa: '',
             editado: false,
             passado: true
         };
         salvarPonto(ponto);
-        document.getElementById('justificativa').value = '';
     } else {
         alert('Por favor, selecione uma data e hora válidas no passado.');
     }
+}
+
+function adicionarJustificativa() {
+    const justificativa = document.getElementById('justificativa').value;
+    if (!justificativa) {
+        alert('A justificativa não pode estar vazia.');
+        return;
+    }
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    if (pontos.length === 0) {
+        alert('Não há registros para adicionar justificativa.');
+        return;
+    }
+    pontos[pontos.length - 1].justificativa = justificativa;
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
+    document.getElementById('justificativa').value = '';
 }
 
 function salvarPonto(ponto) {
