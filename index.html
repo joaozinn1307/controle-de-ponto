@@ -13,43 +13,47 @@
     </header>
 
     <main>
-        <section class="controls">
-            <button onclick="registrarEntrada()">Entrada</button>
-            <button onclick="registrarSaida()">Saída</button>
-            <button onclick="registrarIntervalo()">Intervalo</button>
-            <button onclick="registrarRetorno()">Retorno</button>
-        </section>
+        <div class="main-layout">
+            <section class="registro-passado">
+                <h2>Registrar Ponto no Passado</h2>
+                <input type="date" id="data-passada">
+                <input type="time" id="hora-passada">
+                <select id="tipo-passado">
+                    <option value="Entrada">Entrada</option>
+                    <option value="Saída">Saída</option>
+                    <option value="Intervalo">Intervalo</option>
+                    <option value="Retorno">Retorno</option>
+                </select>
+                <input type="text" id="justificativa" placeholder="Justificativa (obrigatória)">
+                <button onclick="registrarPontoPassado()">Registrar</button>
+            </section>
 
-        <section class="registro-passado">
-            <h2>Registrar Ponto no Passado</h2>
-            <input type="date" id="data-passada">
-            <input type="time" id="hora-passada">
-            <select id="tipo-passado">
-                <option value="Entrada">Entrada</option>
-                <option value="Saída">Saída</option>
-                <option value="Intervalo">Intervalo</option>
-                <option value="Retorno">Retorno</option>
-            </select>
-            <input type="text" id="justificativa" placeholder="Justificativa (obrigatória)">
-            <button onclick="registrarPontoPassado()">Registrar</button>
-        </section>
+            <div class="main-content">
+                <section class="controls">
+                    <button onclick="registrarEntrada()">Entrada</button>
+                    <button onclick="registrarSaida()">Saída</button>
+                    <button onclick="registrarIntervalo()">Intervalo</button>
+                    <button onclick="registrarRetorno()">Retorno</button>
+                </section>
 
-        <section class="relatorio">
-            <h2>Relatório de Marcações</h2>
-            <table id="tabela-relatorio">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>Tipo</th>
-                        <th>Justificativa</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <div id="total-horas">Total de Horas Trabalhadas: 0h</div>
-        </section>
+                <section class="relatorio">
+                    <h2>Relatório de Marcações</h2>
+                    <table id="tabela-relatorio">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Tipo</th>
+                                <th>Justificativa</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="total-horas">Total de Horas Trabalhadas: 0h</div>
+                </section>
+            </div>
+        </div>
     </main>
     <script src="script.js"></script>
 </body>
