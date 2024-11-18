@@ -31,7 +31,7 @@ header h1 {
 .datetime {
     font-size: 1.8rem;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 5px;
     color: var(--highlight-color);
     text-shadow: 1px 1px 3px #000;
 }
