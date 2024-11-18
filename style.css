@@ -51,16 +51,10 @@ header h1 {
     border-radius: 5px;
 }
 
-.registro-passado h2 {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-}
-
 input, select {
     margin: 10px 0;
-    padding: 8px;
-    font-size: 0.9rem;
+    padding: 10px;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
@@ -68,12 +62,12 @@ input, select {
 
 button {
     margin: 10px 0;
-    padding: 10px 20px;
+    padding: 12px 25px;
     background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -100,11 +94,11 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     background-color: white;
-    table-layout: fixed;
+    table-layout: fixed; /* Ajusta a largura das colunas */
 }
 
 table th, table td {
-    padding: 12px;
+    padding: 15px;
     border: 1px solid #ddd;
     text-align: center;
     word-wrap: break-word;
@@ -131,11 +125,28 @@ table tbody tr:hover {
     color: var(--primary-color);
 }
 
+/* Ajustando larguras específicas */
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 15%; /* Coluna Data */
+}
 
-.registro-passado input,
-.registro-passado select,
-.registro-passado button {
-    width: calc(100% - 20px); 
-    max-width: 280px;
-    margin: 5px auto; 
+table th:nth-child(2),
+table td:nth-child(2) {
+    width: 15%; /* Coluna Hora */
+}
+
+table th:nth-child(3),
+table td:nth-child(3) {
+    width: 20%; /* Coluna Tipo */
+}
+
+table th:nth-child(4),
+table td:nth-child(4) {
+    width: 35%; /* Coluna Justificativa */
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+    width: 15%; /* Coluna Ações */
 }
