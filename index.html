@@ -10,14 +10,14 @@
     <h1>Controle de Ponto</h1>
     <div id="datetime" class="destaque-datetime"></div>
 
-    <div>
+    <div class="buttons-container">
         <button onclick="registrarEntrada()">Entrada</button>
         <button onclick="registrarSaida()">Saída</button>
         <button onclick="registrarIntervalo()">Intervalo</button>
         <button onclick="registrarRetorno()">Retorno</button>
     </div>
 
-    <div>
+    <div class="form-container">
         <h2>Registro de Ponto no Passado</h2>
         <input type="date" id="data-passada">
         <input type="time" id="hora-passada">
@@ -30,14 +30,14 @@
         <button onclick="registrarPontoPassado()">Registrar Ponto no Passado</button>
     </div>
 
-    <div>
+    <div class="form-container">
         <h2>Adicionar Justificativa</h2>
         <input type="text" id="justificativa" placeholder="Escreva uma justificativa...">
         <input type="file" id="arquivo-justificativa">
         <button onclick="adicionarJustificativa()">Enviar</button>
     </div>
 
-    <div>
+    <div class="table-container">
         <h2>Relatório de Marcações</h2>
         <table id="tabela-relatorio">
             <thead>
