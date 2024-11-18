@@ -1,83 +1,91 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 20px;
-    margin: 0;
+function atualizarDataHora() {
+    const datetime = document.getElementById('datetime');
+    datetime.innerHTML = new Date().toLocaleString();
 }
 
-h1 {
-    color: #4CAF50;
-    text-align: center;
-    margin-bottom: 20px;
+setInterval(atualizarDataHora, 1000);
+
+function registrarEntrada() {
+    registrarPonto('Entrada');
 }
 
-h2 {
-    color: #333;
-    margin-top: 20px;
+function registrarSaida() {
+    registrarPonto('Saída');
 }
 
-.destaque-datetime {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
+function registrarIntervalo() {
+    registrarPonto('Intervalo');
 }
 
-button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+function registrarRetorno() {
+    registrarPonto('Retorno');
 }
 
-button:hover {
-    background-color: #45a049;
+function registrarPonto(tipo) {
+    const ponto = {
+        data: new Date().toLocaleDateString(),
+        hora: new Date().toLocaleTimeString(),
+        tipo: tipo,
+        editado: false,
+        passado: false,
+        justificativa: ''
+    };
+    salvarPonto(ponto);
 }
 
-input, select {
-    margin: 5px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: calc(100% - 20px);
+function registrarPontoPassado() {
+    const dataPassada = document.getElementById('data-passada').value;
+    const horaPassada = document.getElementById('hora-passada').value;
+    const tipoPassado = document.getElementById('tipo-passado').value;
+
+    if (dataPassada && horaPassada && new Date(dataPassada) <= new Date()) {
+        const ponto = {
+            data: new Date(dataPassada).toLocaleDateString(),
+            hora: horaPassada,
+            tipo: tipoPassado,
+            editado: false,
+            passado: true,
+            justificativa: ''
+        };
+        salvarPonto(ponto);
+    } else {
+        alert('Por favor, selecione uma data e hora válidas no passado.');
+    }
 }
 
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background-color: white;
+function salvarPonto(ponto) {
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    pontos.push(ponto);
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
 }
 
-th {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
+function editarPonto(index) {
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    let ponto = pontos[index];
+
+    const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
+    if (['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
+        ponto.tipo = novoTipo;
+    } else {
+        alert('Tipo inválido!');
+        return;
+    }
+
+    const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
+    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
+
+    if (novaData && novaHora) {
+        ponto.data = novaData;
+        ponto.hora = novaHora;
+        ponto.editado = true;
+    } else {
+        alert("Data ou Hora inválidas!");
+        return;
+    }
+
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
 }
 
-td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-    word-wrap: break-word;
-    max-width: 200px;
-}
-
-.registro-editado {
-    background-color: #ffeb3b;
-}
-
-.registro-passado {
-    background-color: #f44336;
-    color: white;
-}
-
-#total-horas {
-    margin-top: 10px;
-    font-weight: bold;
-}
+// Outras funções como calcularHorasTrabalhadas e atualizarRelatorio permanecem iguais...
