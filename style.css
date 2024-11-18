@@ -17,6 +17,13 @@ h2 {
     margin-top: 20px;
 }
 
+.destaque-datetime {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 button {
     margin: 5px;
     padding: 10px 20px;
@@ -32,7 +39,7 @@ button:hover {
     background-color: #45a049;
 }
 
-input[type="text"], input[type="date"], input[type="time"], input[type="file"], select {
+input, select {
     margin: 5px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -47,16 +54,20 @@ table {
     background-color: white;
 }
 
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
 th {
     background-color: #4CAF50;
     color: white;
-    padding: 10px;
 }
 
 td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
+    word-wrap: break-word;
+    max-width: 200px;
 }
 
 .registro-editado {
