@@ -64,26 +64,35 @@ function editarPonto(index) {
     let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
     let ponto = pontos[index];
 
+    // Solicitar novo tipo de ponto
     const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
     if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
         alert("Tipo inválido! Use apenas: Entrada, Saída, Intervalo, ou Retorno.");
         return;
     }
 
+    // Solicitar nova data
     const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
-    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
-
-    if (novaData && novaHora) {
-        ponto.tipo = novoTipo;
-        ponto.data = novaData;
-        ponto.hora = novaHora;
-        ponto.editado = true;
-
-        localStorage.setItem('pontos', JSON.stringify(pontos));
-        atualizarRelatorio();
-    } else {
-        alert("Data ou Hora inválidas!");
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(novaData)) {
+        alert("Data inválida! Use o formato dd/mm/aaaa.");
+        return;
     }
+
+    // Solicitar nova hora
+    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
+    if (!/^\d{2}:\d{2}$/.test(novaHora)) {
+        alert("Hora inválida! Use o formato hh:mm.");
+        return;
+    }
+
+    // Atualizar o ponto
+    ponto.tipo = novoTipo;
+    ponto.data = novaData;
+    ponto.hora = novaHora;
+    ponto.editado = true;
+
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
 }
 
 function excluirPonto(index) {
