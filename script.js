@@ -66,7 +66,7 @@ function editarPonto(index) {
 
     const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
     if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
-        alert("Tipo inválido!");
+        alert("Tipo inválido! Use apenas: Entrada, Saída, Intervalo, ou Retorno.");
         return;
     }
 
@@ -122,7 +122,28 @@ function atualizarRelatorio() {
         }
     });
 
+    totalHoras = calcularTotalHorasTrabalhadas(pontos);
     document.getElementById('total-horas').innerText = `Total de Horas Trabalhadas: ${totalHoras.toFixed(2)}h`;
+}
+
+function calcularTotalHorasTrabalhadas(pontos) {
+    let totalHoras = 0;
+    let horaEntrada = null;
+
+    pontos.forEach((ponto) => {
+        if (ponto.tipo === 'Entrada') {
+            horaEntrada = new Date(`01/01/2000 ${ponto.hora}`);
+        } else if (ponto.tipo === 'Saída' && horaEntrada) {
+            const horaSaida = new Date(`01/01/2000 ${ponto.hora}`);
+            const diferencaHoras = (horaSaida - horaEntrada) / (1000 * 60 * 60);
+            if (diferencaHoras > 0) {
+                totalHoras += diferencaHoras;
+            }
+            horaEntrada = null;
+        }
+    });
+
+    return totalHoras;
 }
 
 atualizarRelatorio();
