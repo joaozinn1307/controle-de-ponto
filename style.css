@@ -84,4 +84,30 @@ table {
 }
 
 table th, table td {
-    padd
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    word-break: break-word;
+    max-width: 200px;
+}
+
+table th {
+    background-color: var(--table-header-color);
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:hover {
+    background-color: var(--table-hover-color);
+}
+
+#total-horas {
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
