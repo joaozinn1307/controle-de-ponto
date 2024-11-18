@@ -1,9 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f0f0f0;
     color: #333;
-    margin: 0;
     padding: 20px;
+    margin: 0;
 }
 
 h1 {
@@ -15,19 +15,11 @@ h1 {
 h2 {
     color: #333;
     margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: center;
 }
 
 .destaque-datetime {
     font-size: 1.8rem;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.buttons-container {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -38,7 +30,7 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -49,13 +41,10 @@ button:hover {
 
 input, select {
     margin: 5px;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
     width: calc(100% - 20px);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 table {
@@ -63,16 +52,19 @@ table {
     margin-top: 20px;
     border-collapse: collapse;
     background-color: white;
-    text-align: center;
 }
 
 th, td {
     border: 1px solid #ccc;
     padding: 10px;
-    max-width: 200px;
+    text-align: center;
     word-wrap: break-word;
-    word-break: break-word;
+}
+
+td {
+    max-width: 300px;
     overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 th {
@@ -80,23 +72,9 @@ th {
     color: white;
 }
 
-td {
-    background-color: #f9f9f9;
-}
-
-td:hover {
-    background-color: #f1f1f1;
-}
-
-.table-container {
-    margin-top: 30px;
-}
-
 #total-horas {
-    margin-top: 20px;
+    margin-top: 10px;
     font-weight: bold;
-    text-align: center;
-    color: #4CAF50;
 }
 
 .registro-editado {
