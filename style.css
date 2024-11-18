@@ -2,6 +2,7 @@
     --primary-color: #4CAF50;
     --secondary-color: #333;
     --background-color: #f9f9f9;
+    --highlight-color: #ff9800;
     --table-header-color: #4CAF50;
     --table-hover-color: #e8f5e9;
     --button-hover-color: #45a049;
@@ -17,7 +18,7 @@ body {
 
 header {
     text-align: center;
-    padding: 20px 10px;
+    padding: 20px;
     background-color: var(--primary-color);
     color: white;
 }
@@ -28,9 +29,11 @@ header h1 {
 }
 
 .datetime {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: bold;
     margin-top: 10px;
+    color: var(--highlight-color);
+    text-shadow: 1px 1px 3px #000;
 }
 
 .controls {
@@ -73,7 +76,8 @@ input, select {
 }
 
 .relatorio {
-    margin: 30px 0;
+    margin: 30px auto;
+    width: 90%;
 }
 
 table {
@@ -88,7 +92,6 @@ table th, table td {
     border: 1px solid #ddd;
     text-align: center;
     word-break: break-word;
-    max-width: 200px;
 }
 
 table th {
