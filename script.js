@@ -101,7 +101,7 @@ function excluirPonto(index) {
 function atualizarRelatorio() {
     const tabela = document.querySelector("#tabela-relatorio tbody");
     let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    let totalHoras = 0;
+    let totalHoras = calcularTotalHorasTrabalhadas(pontos);
 
     tabela.innerHTML = "";
 
@@ -127,24 +127,23 @@ function atualizarRelatorio() {
         }
     });
 
-    totalHoras = calcularTotalHorasTrabalhadas(pontos);
     document.getElementById('total-horas').innerText = `Total de Horas Trabalhadas: ${totalHoras.toFixed(2)}h`;
 }
 
 function calcularTotalHorasTrabalhadas(pontos) {
     let totalHoras = 0;
-    let horaEntrada = null;
+    let ultimaEntrada = null;
 
     pontos.forEach((ponto) => {
         if (ponto.tipo === 'Entrada') {
-            horaEntrada = new Date(`01/01/2000 ${ponto.hora}`);
-        } else if (ponto.tipo === 'Saída' && horaEntrada) {
+            ultimaEntrada = new Date(`01/01/2000 ${ponto.hora}`);
+        } else if (ponto.tipo === 'Saída' && ultimaEntrada) {
             const horaSaida = new Date(`01/01/2000 ${ponto.hora}`);
-            const diferencaHoras = (horaSaida - horaEntrada) / (1000 * 60 * 60);
-            if (diferencaHoras > 0) {
-                totalHoras += diferencaHoras;
+            const diferenca = (horaSaida - ultimaEntrada) / (1000 * 60 * 60);
+            if (diferenca > 0) {
+                totalHoras += diferenca;
             }
-            horaEntrada = null;
+            ultimaEntrada = null;
         }
     });
 
