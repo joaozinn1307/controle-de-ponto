@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Controle de Ponto</h1>
-    <div id="datetime"></div>
+    <div id="datetime" class="destaque-datetime"></div>
 
     <div>
         <button onclick="registrarEntrada()">Entrada</button>
@@ -38,22 +38,18 @@
     </div>
 
     <div>
-        <h2>Filtrar Relatório</h2>
-        <button onclick="filtrarUltimaSemana()">Última Semana</button>
-        <button onclick="filtrarUltimoMes()">Último Mês</button>
-        <button onclick="atualizarRelatorio()">Todos os Registros</button>
-    </div>
-
-    <div>
         <h2>Relatório de Marcações</h2>
         <table id="tabela-relatorio">
-            <tr>
-                <th>Data</th>
-                <th>Hora</th>
-                <th>Tipo</th>
-                <th>Justificativa</th>
-                <th>Ações</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Justificativa</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
         </table>
         <div id="total-horas">Total de Horas Trabalhadas: 0h</div>
     </div>
