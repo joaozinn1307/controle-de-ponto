@@ -86,8 +86,9 @@ table {
 table th, table td {
     padding: 15px;
     border: 1px solid #ddd;
-    word-wrap: break-word;
-    max-width: 250px;
+    text-align: center;
+    word-break: break-word;
+    max-width: 200px;
 }
 
 table th {
