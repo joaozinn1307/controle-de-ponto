@@ -1,85 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 20px;
-    margin: 0;
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle de Ponto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Controle de Ponto</h1>
+    <div id="datetime" class="destaque-datetime"></div>
 
-h1 {
-    color: #4CAF50;
-    text-align: center;
-    margin-bottom: 20px;
-}
+    <div>
+        <button onclick="registrarEntrada()">Entrada</button>
+        <button onclick="registrarSaida()">Saída</button>
+        <button onclick="registrarIntervalo()">Intervalo</button>
+        <button onclick="registrarRetorno()">Retorno</button>
+    </div>
 
-h2 {
-    color: #333;
-    margin-top: 20px;
-}
+    <div>
+        <h2>Registro de Ponto no Passado</h2>
+        <input type="date" id="data-passada">
+        <input type="time" id="hora-passada">
+        <select id="tipo-passado">
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
+            <option value="Intervalo">Intervalo</option>
+            <option value="Retorno">Retorno</option>
+        </select>
+        <button onclick="registrarPontoPassado()">Registrar Ponto no Passado</button>
+    </div>
 
-.destaque-datetime {
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-}
+    <div>
+        <h2>Adicionar Justificativa</h2>
+        <input type="text" id="justificativa" placeholder="Escreva uma justificativa...">
+        <input type="file" id="arquivo-justificativa">
+        <button onclick="adicionarJustificativa()">Enviar</button>
+    </div>
 
-button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    <div>
+        <h2>Relatório de Marcações</h2>
+        <table id="tabela-relatorio">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Justificativa</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="total-horas">Total de Horas Trabalhadas: 0h</div>
+    </div>
 
-button:hover {
-    background-color: #45a049;
-}
-
-input, select {
-    margin: 5px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: calc(100% - 20px);
-}
-
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-td {
-    word-wrap: break-word;
-    max-width: 200px;
-}
-
-.registro-editado {
-    background-color: #ffeb3b;
-}
-
-.registro-passado {
-    background-color: #f44336;
-    color: white;
-}
-
-#total-horas {
-    margin-top: 10px;
-    font-weight: bold;
-}
+    <script src="script.js"></script>
+</body>
+</html>
