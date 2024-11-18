@@ -60,48 +60,54 @@ function salvarPonto(ponto) {
     atualizarRelatorio();
 }
 
-function editarPonto(index) {
-    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    let ponto = pontos[index];
+function adicionarJustificativa() {
+    const justificativa = document.getElementById('justificativa').value;
+    const arquivo = document.getElementById('arquivo-justificativa').files[0];
 
-    const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
-    if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
-        alert("Tipo inválido!");
-        return;
-    }
+    if (justificativa || arquivo) {
+        const ponto = {
+            data: new Date().toLocaleDateString(),
+            hora: new Date().toLocaleTimeString(),
+            tipo: 'Justificativa',
+            editado: false,
+            passado: false,
+            justificativa: justificativa
+        };
 
-    const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
-    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
+        if (arquivo) {
+            ponto.justificativa += ` (Arquivo: ${arquivo.name})`;
+        }
 
-    if (novaData && novaHora) {
-        ponto.tipo = novoTipo;
-        ponto.data = novaData;
-        ponto.hora = novaHora;
-        ponto.editado = true;
-
-        localStorage.setItem('pontos', JSON.stringify(pontos));
-        atualizarRelatorio();
+        salvarPonto(ponto);
     } else {
-        alert("Data ou Hora inválidas!");
+        alert('Preencha uma justificativa ou envie um arquivo.');
     }
 }
 
 function atualizarRelatorio() {
-    const tabela = document.querySelector("#tabela-relatorio tbody");
+    const tabela = document.getElementById('tabela-relatorio');
     let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
     let totalHoras = 0;
 
-    tabela.innerHTML = "";
+    tabela.innerHTML = `
+        <tr>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Tipo</th>
+            <th>Justificativa</th>
+            <th>Ações</th>
+        </tr>
+    `;
 
     pontos.forEach((ponto, index) => {
-        const row = tabela.insertRow();
+        let row = tabela.insertRow();
         row.insertCell(0).innerText = ponto.data;
         row.insertCell(1).innerText = ponto.hora;
         row.insertCell(2).innerText = ponto.tipo;
         row.insertCell(3).innerText = ponto.justificativa || '-';
-        const actionsCell = row.insertCell(4);
 
-        actionsCell.innerHTML = `
+        let acoesCell = row.insertCell(4);
+        acoesCell.innerHTML = `
             <button onclick="editarPonto(${index})">Editar</button>
             <button onclick="excluirPonto(${index})">Excluir</button>
         `;
@@ -121,10 +127,74 @@ function atualizarRelatorio() {
 }
 
 function calcularHorasTrabalhadas(ponto, index, pontos) {
-    if (ponto.tipo === "Saída" && index > 0) {
-        const entradaAnterior = pontos[index - 1];
-        if (entradaAnterior.tipo === "Entrada") {
-            const horaEntrada = new Date(`01/01/2000 ${entradaAnterior.hora}`);
-            const horaSaida = new Date(`01/01/2000 ${ponto.hora}`);
-            const diferencaHoras = (horaSaida - horaEntrada) / (1000 * 60 * 60);
-            return diferencaHoras >
+    if (ponto.tipo.includes('Saída') && index > 0) {
+        let entradaAnterior = pontos[index - 1];
+        if (entradaAnterior.tipo.includes('Entrada')) {
+            let horaEntrada = new Date(`01/01/2000 ${entradaAnterior.hora}`);
+            let horaSaida = new Date(`01/01/2000 ${ponto.hora}`);
+            let diferencaHoras = (horaSaida - horaEntrada) / (1000 * 60 * 60);
+            return diferencaHoras > 0 ? diferencaHoras : 0;
+        }
+    }
+    return 0;
+}
+
+function editarPonto(index) {
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    let ponto = pontos[index];
+    ponto.editado = true;
+    ponto.tipo = prompt("Editar Tipo de Ponto:", ponto.tipo) || ponto.tipo;
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
+}
+
+function excluirPonto(index) {
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    pontos.splice(index, 1);
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
+}
+
+function filtrarUltimaSemana() {
+    filtrarPorPeriodo(7);
+}
+
+function filtrarUltimoMes() {
+    filtrarPorPeriodo(30);
+}
+
+function filtrarPorPeriodo(dias) {
+    const tabela = document.getElementById('tabela-relatorio');
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    const hoje = new Date();
+
+    pontos = pontos.filter(ponto => {
+        const dataPonto = new Date(ponto.data.split('/').reverse().join('-'));
+        const diferencaDias = Math.floor((hoje - dataPonto) / (1000 * 60 * 60 * 24));
+        return diferencaDias <= dias;
+    });
+
+    tabela.innerHTML = `
+        <tr>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Tipo</th>
+            <th>Justificativa</th>
+            <th>Ações</th>
+        </tr>
+    `;
+
+    pontos.forEach((ponto, index) => {
+        let row = tabela.insertRow();
+        row.insertCell(0).innerText = ponto.data;
+        row.insertCell(1).innerText = ponto.hora;
+        row.insertCell(2).innerText = ponto.tipo;
+        row.insertCell(3).innerText = ponto.justificativa || '-';
+        row.insertCell(4).innerHTML = `
+            <button onclick="editarPonto(${index})">Editar</button>
+            <button onclick="excluirPonto(${index})">Excluir</button>
+        `;
+    });
+}
+
+atualizarRelatorio();
