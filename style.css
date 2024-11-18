@@ -48,7 +48,7 @@ header h1 {
     background-color: white;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 input, select {
