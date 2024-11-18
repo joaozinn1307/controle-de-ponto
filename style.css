@@ -31,7 +31,7 @@ header h1 {
 .datetime {
     font-size: 1.8rem;
     font-weight: bold;
-    margin-top: 5px;
+    margin-top: 10px;
     color: var(--highlight-color);
     text-shadow: 1px 1px 3px #000;
 }
@@ -44,17 +44,23 @@ header h1 {
 }
 
 .registro-passado {
-    width: 10%;
+    width: 30%;
     background-color: white;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+.registro-passado h2 {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
 }
 
 input, select {
     margin: 10px 0;
-    padding: 10px;
-    font-size: 1rem;
+    padding: 8px;
+    font-size: 0.9rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
@@ -62,12 +68,12 @@ input, select {
 
 button {
     margin: 10px 0;
-    padding: 12px 25px;
+    padding: 10px 20px;
     background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -92,12 +98,13 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: white;
-    table-layout: fixed; 
+    table-layout: fixed;
+}
 
 table th, table td {
-    padding: 15px;
+    padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
     word-wrap: break-word;
@@ -125,27 +132,10 @@ table tbody tr:hover {
 }
 
 
-table th:nth-child(1),
-table td:nth-child(1) {
-    width: 10%; 
-}
-
-table th:nth-child(2),
-table td:nth-child(2) {
-    width: 15%; 
-}
-
-table th:nth-child(3),
-table td:nth-child(3) {
-    width: 20%;
-}
-
-table th:nth-child(4),
-table td:nth-child(4) {
-    width: 35%; 
-}
-
-table th:nth-child(5),
-table td:nth-child(5) {
-    width: 15%; 
+.registro-passado input,
+.registro-passado select,
+.registro-passado button {
+    width: calc(100% - 20px); 
+    max-width: 280px;
+    margin: 5px auto; 
 }
