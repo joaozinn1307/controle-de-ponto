@@ -26,9 +26,9 @@ function registrarPonto(tipo) {
         data: new Date().toLocaleDateString(),
         hora: new Date().toLocaleTimeString(),
         tipo: tipo,
+        justificativa: '',
         editado: false,
-        passado: false,
-        justificativa: ''
+        passado: false
     };
     salvarPonto(ponto);
 }
@@ -43,14 +43,31 @@ function registrarPontoPassado() {
             data: new Date(dataPassada).toLocaleDateString(),
             hora: horaPassada,
             tipo: tipoPassado,
+            justificativa: '',
             editado: false,
-            passado: true,
-            justificativa: ''
+            passado: true
         };
         salvarPonto(ponto);
     } else {
         alert('Por favor, selecione uma data e hora válidas no passado.');
     }
+}
+
+function adicionarJustificativa() {
+    const justificativa = document.getElementById('justificativa').value;
+    if (!justificativa) {
+        alert('A justificativa não pode estar vazia.');
+        return;
+    }
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    if (pontos.length === 0) {
+        alert('Não há registros para adicionar justificativa.');
+        return;
+    }
+    pontos[pontos.length - 1].justificativa = justificativa;
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
+    document.getElementById('justificativa').value = '';
 }
 
 function salvarPonto(ponto) {
@@ -61,24 +78,24 @@ function salvarPonto(ponto) {
 }
 
 function editarPonto(index) {
-    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    let ponto = pontos[index];
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    const ponto = pontos[index];
 
     const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
     if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
-        alert("Tipo inválido! Use apenas: Entrada, Saída, Intervalo, ou Retorno.");
+        alert("Tipo inválido!");
         return;
     }
 
     const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(novaData)) {
-        alert("Data inválida! Use o formato dd/mm/aaaa.");
+        alert("Data inválida!");
         return;
     }
 
     const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
     if (!/^\d{2}:\d{2}$/.test(novaHora)) {
-        alert("Hora inválida! Use o formato hh:mm.");
+        alert("Hora inválida!");
         return;
     }
 
@@ -92,7 +109,7 @@ function editarPonto(index) {
 }
 
 function excluirPonto(index) {
-    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
     pontos.splice(index, 1);
     localStorage.setItem('pontos', JSON.stringify(pontos));
     atualizarRelatorio();
@@ -100,8 +117,8 @@ function excluirPonto(index) {
 
 function atualizarRelatorio() {
     const tabela = document.querySelector("#tabela-relatorio tbody");
-    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    let totalHoras = calcularTotalHorasTrabalhadas(pontos);
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    const totalHoras = calcularTotalHorasTrabalhadas(pontos);
 
     tabela.innerHTML = "";
 
