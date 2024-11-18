@@ -65,10 +65,8 @@ function editarPonto(index) {
     let ponto = pontos[index];
 
     const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
-    if (['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
-        ponto.tipo = novoTipo;
-    } else {
-        alert('Tipo inválido!');
+    if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
+        alert("Tipo inválido!");
         return;
     }
 
@@ -76,16 +74,57 @@ function editarPonto(index) {
     const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
 
     if (novaData && novaHora) {
+        ponto.tipo = novoTipo;
         ponto.data = novaData;
         ponto.hora = novaHora;
         ponto.editado = true;
+
+        localStorage.setItem('pontos', JSON.stringify(pontos));
+        atualizarRelatorio();
     } else {
         alert("Data ou Hora inválidas!");
-        return;
     }
-
-    localStorage.setItem('pontos', JSON.stringify(pontos));
-    atualizarRelatorio();
 }
 
-// Outras funções como calcularHorasTrabalhadas e atualizarRelatorio permanecem iguais...
+function atualizarRelatorio() {
+    const tabela = document.querySelector("#tabela-relatorio tbody");
+    let pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    let totalHoras = 0;
+
+    tabela.innerHTML = "";
+
+    pontos.forEach((ponto, index) => {
+        const row = tabela.insertRow();
+        row.insertCell(0).innerText = ponto.data;
+        row.insertCell(1).innerText = ponto.hora;
+        row.insertCell(2).innerText = ponto.tipo;
+        row.insertCell(3).innerText = ponto.justificativa || '-';
+        const actionsCell = row.insertCell(4);
+
+        actionsCell.innerHTML = `
+            <button onclick="editarPonto(${index})">Editar</button>
+            <button onclick="excluirPonto(${index})">Excluir</button>
+        `;
+
+        if (ponto.editado) {
+            row.classList.add('registro-editado');
+        }
+
+        if (ponto.passado) {
+            row.classList.add('registro-passado');
+        }
+
+        totalHoras += calcularHorasTrabalhadas(ponto, index, pontos);
+    });
+
+    document.getElementById('total-horas').innerText = `Total de Horas Trabalhadas: ${totalHoras.toFixed(2)}h`;
+}
+
+function calcularHorasTrabalhadas(ponto, index, pontos) {
+    if (ponto.tipo === "Saída" && index > 0) {
+        const entradaAnterior = pontos[index - 1];
+        if (entradaAnterior.tipo === "Entrada") {
+            const horaEntrada = new Date(`01/01/2000 ${entradaAnterior.hora}`);
+            const horaSaida = new Date(`01/01/2000 ${ponto.hora}`);
+            const diferencaHoras = (horaSaida - horaEntrada) / (1000 * 60 * 60);
+            return diferencaHoras >
