@@ -92,10 +92,9 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: white;
-    table-layout: fixed; /* Ajusta a largura das colunas */
-}
+    table-layout: fixed; 
 
 table th, table td {
     padding: 15px;
