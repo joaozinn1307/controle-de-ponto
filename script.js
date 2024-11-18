@@ -67,48 +67,10 @@ function salvarPonto(ponto) {
     atualizarRelatorio();
 }
 
-function editarPonto(index) {
-    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    const ponto = pontos[index];
-
-    const novoTipo = prompt("Digite o novo tipo de ponto (Entrada, Saída, Intervalo, Retorno):", ponto.tipo);
-    if (!['Entrada', 'Saída', 'Intervalo', 'Retorno'].includes(novoTipo)) {
-        alert("Tipo inválido!");
-        return;
-    }
-
-    const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
-    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(novaData)) {
-        alert("Data inválida!");
-        return;
-    }
-
-    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
-    if (!/^\d{2}:\d{2}$/.test(novaHora)) {
-        alert("Hora inválida!");
-        return;
-    }
-
-    ponto.tipo = novoTipo;
-    ponto.data = novaData;
-    ponto.hora = novaHora;
-    ponto.editado = true;
-
-    localStorage.setItem('pontos', JSON.stringify(pontos));
-    atualizarRelatorio();
-}
-
-function excluirPonto(index) {
-    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    pontos.splice(index, 1);
-    localStorage.setItem('pontos', JSON.stringify(pontos));
-    atualizarRelatorio();
-}
-
 function atualizarRelatorio() {
     const tabela = document.querySelector("#tabela-relatorio tbody");
     const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
-    const totalHoras = calcularTotalHorasTrabalhadas(pontos);
+    let totalHoras = calcularTotalHorasTrabalhadas(pontos);
 
     tabela.innerHTML = "";
 
@@ -124,14 +86,6 @@ function atualizarRelatorio() {
             <button onclick="editarPonto(${index})">Editar</button>
             <button onclick="excluirPonto(${index})">Excluir</button>
         `;
-
-        if (ponto.editado) {
-            row.classList.add('registro-editado');
-        }
-
-        if (ponto.passado) {
-            row.classList.add('registro-passado');
-        }
     });
 
     document.getElementById('total-horas').innerText = `Total de Horas Trabalhadas: ${totalHoras.toFixed(2)}h`;
@@ -155,6 +109,30 @@ function calcularTotalHorasTrabalhadas(pontos) {
     });
 
     return totalHoras;
+}
+
+function editarPonto(index) {
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    const ponto = pontos[index];
+
+    const novoTipo = prompt("Digite o novo tipo de ponto:", ponto.tipo);
+    const novaData = prompt("Digite a nova data (dd/mm/aaaa):", ponto.data);
+    const novaHora = prompt("Digite a nova hora (hh:mm):", ponto.hora);
+
+    ponto.tipo = novoTipo;
+    ponto.data = novaData;
+    ponto.hora = novaHora;
+    ponto.editado = true;
+
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
+}
+
+function excluirPonto(index) {
+    const pontos = JSON.parse(localStorage.getItem('pontos')) || [];
+    pontos.splice(index, 1);
+    localStorage.setItem('pontos', JSON.stringify(pontos));
+    atualizarRelatorio();
 }
 
 atualizarRelatorio();
