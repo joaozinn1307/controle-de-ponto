@@ -57,12 +57,12 @@ input, select {
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
+    width: calc(100% - 20px);
 }
 
 button {
     margin: 10px 0;
-    padding: 12px 25px;
+    padding: 10px 20px;
     background-color: var(--primary-color);
     color: white;
     border: none;
@@ -94,7 +94,7 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     background-color: white;
-    table-layout: fixed; /* Ajusta a largura das colunas */
+    table-layout: fixed;
 }
 
 table th, table td {
@@ -123,30 +123,4 @@ table tbody tr:hover {
     text-align: left;
     font-size: 1.2rem;
     color: var(--primary-color);
-}
-
-/* Ajustando larguras específicas */
-table th:nth-child(1),
-table td:nth-child(1) {
-    width: 15%; /* Coluna Data */
-}
-
-table th:nth-child(2),
-table td:nth-child(2) {
-    width: 15%; /* Coluna Hora */
-}
-
-table th:nth-child(3),
-table td:nth-child(3) {
-    width: 20%; /* Coluna Tipo */
-}
-
-table th:nth-child(4),
-table td:nth-child(4) {
-    width: 35%; /* Coluna Justificativa */
-}
-
-table th:nth-child(5),
-table td:nth-child(5) {
-    width: 15%; /* Coluna Ações */
 }
